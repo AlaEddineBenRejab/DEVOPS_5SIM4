@@ -19,7 +19,7 @@ services:
     image: alaeddine/alaeddinebenrejab-5sim4-devopsproject:latest
     container_name: springboot-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.142.128:3306/achatdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.43.133:3306/achatdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       MYSQL_HOST: mysql-db

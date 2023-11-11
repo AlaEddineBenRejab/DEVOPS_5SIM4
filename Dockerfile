@@ -1,4 +1,4 @@
 FROM openjdk:8-jdk-alpine
 EXPOSE 8282
-COPY target/DevOps_Project-1.0.jar DevOps_Project.jar
-ENTRYPOINT ["java", "-jar", "DevOps_Project.jar"]
+COPY target/5SIM4-DevOps-1.0.jar 5SIM4-DevOps.jar
+ENTRYPOINT ["java", "-jar", "5SIM4-DevOps.jar"]
