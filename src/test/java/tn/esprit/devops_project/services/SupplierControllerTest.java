@@ -1,8 +1,6 @@
 package tn.esprit.devops_project.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +27,7 @@ import tn.esprit.devops_project.services.SupplierServiceImpl;
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class
+        TransactionalTestExecutionListener.class
 })
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
@@ -43,7 +40,6 @@ public class SupplierControllerTest {
     private SupplierServiceImpl supplierService;
 
     @Test
-    @DatabaseSetup("/data-set/supplier-data.xml")
     public void addSupplier() throws Exception {
         final Supplier supplier= new Supplier(7L,"code","label",SupplierCategory.CONVENTIONNE,null);
 
@@ -58,7 +54,6 @@ public class SupplierControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/supplier-data.xml")
     public void retrieveSupplier() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/supplier/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -66,7 +61,6 @@ public class SupplierControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/supplier-data.xml")
     public void getSuppliers() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/supplier"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -74,14 +68,12 @@ public class SupplierControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/supplier-data.xml")
     public void removeFournisseur() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/supplier/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    @DatabaseSetup("/data-set/supplier-data.xml")
     public void modifyFournisseur() throws Exception {
         Supplier supplier = supplierService.retrieveSupplier(1L);
         ObjectMapper objectMapper = new ObjectMapper();

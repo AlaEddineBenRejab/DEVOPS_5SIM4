@@ -1,8 +1,6 @@
 package tn.esprit.devops_project.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +25,7 @@ import tn.esprit.devops_project.entities.Stock;
 @TestExecutionListeners({
         DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class
+        TransactionalTestExecutionListener.class
 })
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
@@ -38,7 +35,6 @@ public class StockControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DatabaseSetup("/data-set/stock-data.xml")
     public void addStock() throws Exception {
         final Stock stock1 = new Stock(7,"Title 7",null);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -51,7 +47,6 @@ public class StockControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/stock-data.xml")
     public void retrieveStock() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/stock/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -59,7 +54,6 @@ public class StockControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/stock-data.xml")
     public void retrieveAllStock() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/stock"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

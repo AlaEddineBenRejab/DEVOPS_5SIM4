@@ -1,8 +1,6 @@
 package tn.esprit.devops_project.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +26,7 @@ import tn.esprit.devops_project.entities.ProductCategory;
 @Transactional
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
+        TransactionalTestExecutionListener.class})
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class ProductControllerTest {
@@ -38,7 +35,6 @@ public class ProductControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DatabaseSetup("/data-set/product-data.xml")
     public void retreiveAllProduct() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/product"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -46,7 +42,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/product-data.xml")
     public void retrieveProduct() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/product/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -54,7 +49,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DatabaseSetup({"/data-set/product-data.xml", "/data-set/stock-data.xml"})
     public void addProduct() throws Exception {
         Product product = new Product(7L,"Product 7",100,70,ProductCategory.BOOKS,null);
 
@@ -68,14 +62,12 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/product-data.xml")
     public void deleteProduct() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/product/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    @DatabaseSetup({"/data-set/product-data.xml", "/data-set/stock-data.xml"})
     public void retreiveProductStock() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/product/stock/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -83,7 +75,6 @@ public class ProductControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/product-data.xml")
     public void retrieveProductByCategory() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/productCategory/CLOTHING"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

@@ -1,8 +1,6 @@
 package tn.esprit.devops_project.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,7 @@ import tn.esprit.devops_project.entities.Operator;
 @Transactional
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class})
+        TransactionalTestExecutionListener.class})
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class OperatorControllerTest {
@@ -36,7 +33,6 @@ public class OperatorControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DatabaseSetup("/data-set/operator-data.xml")
     public void getOperators() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/operator"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -44,7 +40,6 @@ public class OperatorControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/operator-data.xml")
     public void retrieveOperator() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/operator/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -52,7 +47,6 @@ public class OperatorControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/operator-data.xml")
     public void addOperator() throws Exception {
         Operator operator = new Operator(7L,"fname2","lname3","0000",null);
 
@@ -66,14 +60,12 @@ public class OperatorControllerTest {
     }
 
     @Test
-    @DatabaseSetup("/data-set/operator-data.xml")
     public void removeOperator() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/operator/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
-    @DatabaseSetup("/data-set/operator-data.xml")
     public void modifyOperator() throws Exception {
         Operator operator = new Operator();
         operator.setIdOperateur(1L);
